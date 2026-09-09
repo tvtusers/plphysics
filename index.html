@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Protected Links</title>
+  <title>Dashboard</title>
   <style>
-    /* Prevent content from displaying before password check */
     body {
-      display: none;
       font-family: Arial, sans-serif;
       background-color: #f4f6f8;
       margin: 0;
@@ -48,24 +46,6 @@
       text-decoration: underline;
     }
   </style>
-  <script>
-    // Change your password here
-    const SECRET_PASSWORD = "myPassword123";
-
-    function checkPassword() {
-      const userInput = prompt("Enter the password to view this page:");
-      if (userInput === SECRET_PASSWORD) {
-        // Display page content if correct
-        document.body.style.display = "block";
-      } else {
-        alert("Incorrect password. Access denied.");
-        window.location.reload();
-      }
-    }
-
-    // Run password check when script loads
-    checkPassword();
-  </script>
 </head>
 <body>
 

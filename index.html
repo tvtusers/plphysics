@@ -89,7 +89,7 @@
 
     /* Glowing Card Design */
     .card {
-      background: rgba(8, 16, 32, 0.85);
+      background: rgba(8, 16, 32, 0.88);
       backdrop-filter: blur(12px);
       border: 1.5px solid rgba(0, 210, 255, 0.4);
       border-radius: 12px;
@@ -178,7 +178,7 @@
 
     // 20 Formulae from 11th Standard
     const formulas11 = [
-      "v = u + at", "s = ut + ½ at²", "v² = u² + 2as", "F = ma", "p = mv",
+      "v = u + at", "s = ut + ½at²", "v² = u² + 2as", "F = ma", "p = mv",
       "W = ΔK", "K = ½mv²", "U = mgh", "P = W/t", "τ = r × F",
       "L = Iω", "F = G(m₁m₂)/r²", "T = 2π√(l/g)", "F = -kx", "ρ = m/V",
       "P = F/A", "PV = nRT", "v = fλ", "Cp - Cv = R", "ΔQ = ΔU + W"
@@ -201,99 +201,91 @@
       return neonColors[Math.floor(Math.random() * neonColors.length)];
     }
 
-    // Combine formulas into single dataset
-    const allFormulas = [];
-    formulas11.forEach(f => allFormulas.push(f));
-    formulas12.forEach(f => allFormulas.push(f));
+    // Combined list of 40 formulas
+    const allFormulas = [...formulas11, ...formulas12];
 
-    // Exactly 9 Radial Star Paths (evenly spaced 360 / 9 degrees = 40 deg intervals)
-    const NUM_TRACKS = 9;
-    const radialAngles = [];
-    for (let i = 0; i < NUM_TRACKS; i++) {
-      radialAngles.push((i * (2 * Math.PI / NUM_TRACKS)));
-    }
+    // Exactly 8 Radial Lines: 4 on Right, 4 on Left (No Vertical Top/Bottom)
+    const degToRad = d => (d * Math.PI) / 180;
+    const radialAngles = [
+      degToRad(-50), degToRad(-20), degToRad(20), degToRad(50),   // 4 Right Side
+      degToRad(130), degToRad(160), degToRad(-160), degToRad(-130) // 4 Left Side
+    ];
 
-    class RadialFormula {
-      constructor(text, trackIndex, sequenceOffset) {
-        this.text = text;
-        this.trackIndex = trackIndex;
-        // Negative offset creates a delayed, one-after-the-other queue per ray
-        this.progress = -sequenceOffset; 
-        this.speed = 0.0018 + Math.random() * 0.0004;
-        this.color = getRandomColor();
-        this.fontSize = 25;
+    class RadialQueueManager {
+      constructor(angle, formulaList) {
+        this.angle = angle;
+        this.formulaList = formulaList;
+        this.index = 0;
+        this.items = [];
+        this.speed = 1.2; // Pixels per frame inward
+        this.spacing = 180; // Minimum distance (pixels) between formulas in queue
       }
 
-      update() {
-        this.progress += this.speed;
-
-        // Reset to outer boundary when formula reaches the central card menu
-        if (this.progress >= 1.0) {
-          this.progress = 0.0;
-          this.color = getRandomColor();
+      updateAndDraw(centerX, centerY, maxRadius, minRadius) {
+        // Spawn first item or next queue item when space is available
+        if (this.items.length === 0 || (maxRadius - this.items[this.items.length - 1].radius >= this.spacing)) {
+          const formulaText = this.formulaList[this.index % this.formulaList.length];
+          this.index++;
+          this.items.push({
+            text: formulaText,
+            radius: maxRadius,
+            color: getRandomColor()
+          });
         }
 
-        // Only draw when visible on screen (progress >= 0)
-        if (this.progress >= 0) {
-          this.draw();
+        // Move and draw each item in queue
+        for (let i = this.items.length - 1; i >= 0; i--) {
+          let item = this.items[i];
+          item.radius -= this.speed;
+
+          // Remove item once it reaches the center cards boundary
+          if (item.radius <= minRadius) {
+            this.items.splice(i, 1);
+            continue;
+          }
+
+          // Convert polar distance to screen coordinates
+          const x = centerX + item.radius * Math.cos(this.angle);
+          const y = centerY + item.radius * Math.sin(this.angle);
+
+          ctx.save();
+          ctx.translate(x, y);
+
+          // Rotate text naturally along ray angle
+          let rotationAngle = this.angle;
+          if (this.angle > Math.PI / 2 || this.angle < -Math.PI / 2) {
+            rotationAngle += Math.PI; // Keeps left side text right-side up
+          }
+          ctx.rotate(rotationAngle);
+
+          // Render Larger Font (20px bold)
+          ctx.font = `700 20px 'Courier New', monospace`;
+          ctx.fillStyle = item.color;
+          ctx.shadowColor = item.color;
+          ctx.shadowBlur = 10;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+
+          ctx.fillText(item.text, 0, 0);
+          ctx.restore();
         }
-      }
-
-      draw() {
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-
-        const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY);
-        const minRadius = 200; // Stopping zone around menu cards
-
-        const currentRadius = maxRadius - (this.progress * (maxRadius - minRadius));
-        const angle = radialAngles[this.trackIndex];
-
-        // Polar coordinates
-        const x = centerX + currentRadius * Math.cos(angle);
-        const y = centerY + currentRadius * Math.sin(angle);
-
-        ctx.save();
-        ctx.translate(x, y);
-
-        // Rotate text to match ray direction
-        // Adjust left side text so it is never upside down
-        let textRotation = angle;
-        if (angle > Math.PI / 2 && angle < (3 * Math.PI) / 2) {
-          textRotation += Math.PI; 
-        }
-        ctx.rotate(textRotation);
-
-        ctx.font = `600 ${this.fontSize}px 'Courier New', monospace`;
-        ctx.fillStyle = this.color;
-        ctx.shadowColor = this.color;
-        ctx.shadowBlur = 8;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        ctx.fillText(this.text, 0, 0);
-        ctx.restore();
       }
     }
 
-    // Build the 40-formula starburst stream
-    const activeFormulas = [];
-    allFormulas.forEach((formulaText, index) => {
-      const trackIndex = index % NUM_TRACKS; // Distribute across 9 tracks
-      // Create equal distance delays so formulas arrive one after another
-      const sequenceOffset = Math.floor(index / NUM_TRACKS) * 0.22;
-      activeFormulas.push(new RadialFormula(formulaText, trackIndex, sequenceOffset));
+    // Divide formulas evenly across the 8 ray queues
+    const queues = [];
+    const formulasPerRay = Math.ceil(allFormulas.length / radialAngles.length);
+
+    radialAngles.forEach((angle, rayIndex) => {
+      const slice = allFormulas.slice(rayIndex * formulasPerRay, (rayIndex + 1) * formulasPerRay);
+      queues.push(new RadialQueueManager(angle, slice.length > 0 ? slice : allFormulas));
     });
 
-    // Draw the 9 Star Ray Guide Lines
-    function drawStarRays() {
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY);
-
-      ctx.strokeStyle = "rgba(0, 210, 255, 0.1)";
+    // Draw the 8 ray guidelines
+    function drawStarRays(centerX, centerY, maxRadius) {
+      ctx.strokeStyle = "rgba(0, 210, 255, 0.12)";
       ctx.lineWidth = 1;
-      ctx.setLineDash([4, 6]);
+      ctx.setLineDash([6, 6]);
 
       radialAngles.forEach(angle => {
         ctx.beginPath();
@@ -312,9 +304,15 @@
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      drawStarRays();
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY);
+      const minRadius = 220; // Radius where cards sit
 
-      activeFormulas.forEach(f => f.update());
+      drawStarRays(centerX, centerY, maxRadius);
+
+      // Process strictly controlled queues for each ray
+      queues.forEach(q => q.updateAndDraw(centerX, centerY, maxRadius, minRadius));
 
       requestAnimationFrame(animate);
     }

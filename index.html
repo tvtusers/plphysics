@@ -50,7 +50,7 @@
       z-index: 2;
     }
 
-    /* Main Container */
+    /* Main Wrapper */
     .main-wrapper {
       position: relative;
       z-index: 2;
@@ -201,28 +201,25 @@
       return neonColors[Math.floor(Math.random() * neonColors.length)];
     }
 
-    // Combine all 40 formulas
+    // Combine formulas into single dataset
     const allFormulas = [];
-    formulas11.forEach(f => allFormulas.push({ text: f, grade: '11th' }));
-    formulas12.forEach(f => allFormulas.push({ text: f, grade: '12th' }));
+    formulas11.forEach(f => allFormulas.push(f));
+    formulas12.forEach(f => allFormulas.push(f));
 
-    // 5 Radial Angle Paths (Degrees converted to Radians)
-    // Angles point inward toward center
-    const radialAngles = [
-      Math.PI,                  // Left side
-      -Math.PI / 3,             // Top Right
-      Math.PI / 3,              // Bottom Right
-      -2 * Math.PI / 3,         // Top Left
-      2 * Math.PI / 3           // Bottom Left
-    ];
+    // Exactly 9 Radial Star Paths (evenly spaced 360 / 9 degrees = 40 deg intervals)
+    const NUM_TRACKS = 9;
+    const radialAngles = [];
+    for (let i = 0; i < NUM_TRACKS; i++) {
+      radialAngles.push((i * (2 * Math.PI / NUM_TRACKS)));
+    }
 
     class RadialFormula {
-      constructor(formulaObj, trackIndex, offsetProgress) {
-        this.text = formulaObj.text;
-        this.grade = formulaObj.grade;
+      constructor(text, trackIndex, sequenceOffset) {
+        this.text = text;
         this.trackIndex = trackIndex;
-        this.progress = offsetProgress; // 0.0 (Outer Edge) to 1.0 (Center)
-        this.speed = 0.0015 + Math.random() * 0.001; // Movement speed
+        // Negative offset creates a delayed, one-after-the-other queue per ray
+        this.progress = -sequenceOffset; 
+        this.speed = 0.0018 + Math.random() * 0.0004;
         this.color = getRandomColor();
         this.fontSize = 15;
       }
@@ -230,64 +227,73 @@
       update() {
         this.progress += this.speed;
 
-        // Reset back to outer boundary when reaching center
+        // Reset to outer boundary when formula reaches the central card menu
         if (this.progress >= 1.0) {
           this.progress = 0.0;
-          this.color = getRandomColor(); // Change color on respawn
+          this.color = getRandomColor();
         }
 
-        this.draw();
+        // Only draw when visible on screen (progress >= 0)
+        if (this.progress >= 0) {
+          this.draw();
+        }
       }
 
       draw() {
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
-        
-        // Calculate maximum radial distance from screen corners
+
         const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY);
-        const minRadius = 220; // Radius where cards sit
+        const minRadius = 200; // Stopping zone around menu cards
 
         const currentRadius = maxRadius - (this.progress * (maxRadius - minRadius));
         const angle = radialAngles[this.trackIndex];
 
-        // Convert Polar to Cartesian coordinates
+        // Polar coordinates
         const x = centerX + currentRadius * Math.cos(angle);
         const y = centerY + currentRadius * Math.sin(angle);
 
         ctx.save();
         ctx.translate(x, y);
 
-        // Draw track indicator line softly
+        // Rotate text to match ray direction
+        // Adjust left side text so it is never upside down
+        let textRotation = angle;
+        if (angle > Math.PI / 2 && angle < (3 * Math.PI) / 2) {
+          textRotation += Math.PI; 
+        }
+        ctx.rotate(textRotation);
+
         ctx.font = `600 ${this.fontSize}px 'Courier New', monospace`;
         ctx.fillStyle = this.color;
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 8;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        
+
         ctx.fillText(this.text, 0, 0);
         ctx.restore();
       }
     }
 
-    // Distribute formulas evenly across the 5 radial tracks
+    // Build the 40-formula starburst stream
     const activeFormulas = [];
-    allFormulas.forEach((fObj, index) => {
-      const trackIndex = index % 5;
-      // Stagger formulas along the radial path
-      const offsetProgress = (Math.floor(index / 5) * 0.12) % 1.0; 
-      activeFormulas.push(new RadialFormula(fObj, trackIndex, offsetProgress));
+    allFormulas.forEach((formulaText, index) => {
+      const trackIndex = index % NUM_TRACKS; // Distribute across 9 tracks
+      // Create equal distance delays so formulas arrive one after another
+      const sequenceOffset = Math.floor(index / NUM_TRACKS) * 0.22;
+      activeFormulas.push(new RadialFormula(formulaText, trackIndex, sequenceOffset));
     });
 
-    // Draw Radial Guidelines
-    function drawRadialLines() {
+    // Draw the 9 Star Ray Guide Lines
+    function drawStarRays() {
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
       const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY);
 
-      ctx.strokeStyle = "rgba(0, 210, 255, 0.08)";
+      ctx.strokeStyle = "rgba(0, 210, 255, 0.1)";
       ctx.lineWidth = 1;
-      ctx.setLineDash([5, 5]);
+      ctx.setLineDash([4, 6]);
 
       radialAngles.forEach(angle => {
         ctx.beginPath();
@@ -305,11 +311,9 @@
     // Animation Loop
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw standard guide lines
-      drawRadialLines();
 
-      // Update and render all 40 radial formulas
+      drawStarRays();
+
       activeFormulas.forEach(f => f.update());
 
       requestAnimationFrame(animate);

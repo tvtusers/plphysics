@@ -3,155 +3,287 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - PL-PHYSICS</title>
+  <title>PL-PHYSICS ADVANCED STUDY PORTAL</title>
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
-      margin: 0;
-      padding: 40px 20px;
-      position: relative;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #050b14;
+      color: #ffffff;
       min-height: 100vh;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
     }
 
-    /* Floating Physics Equations Background */
-    .bg-equations {
+    /* Bouncing Physics Canvas */
+    #physics-canvas {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
       z-index: 0;
-      overflow: hidden;
+      pointer-events: none;
     }
 
-    .equation {
-      position: absolute;
-      color: rgba(0, 51, 102, 0.06); /* Mild, subtle color */
-      font-family: 'Courier New', Courier, monospace;
-      font-weight: bold;
-      user-select: none;
-      animation: float 12s infinite ease-in-out;
-    }
-
-    /* Random placement and font sizes for equations */
-    .eq-1 { top: 10%; left: 8%;  font-size: 2rem; animation-duration: 14s; }
-    .eq-2 { top: 25%; right: 12%; font-size: 2.5rem; animation-duration: 18s; animation-delay: -2s; }
-    .eq-3 { top: 45%; left: 5%;  font-size: 2.2rem; animation-duration: 16s; animation-delay: -5s; }
-    .eq-4 { top: 65%; right: 8%; font-size: 1.8rem; animation-duration: 20s; animation-delay: -3s; }
-    .eq-5 { top: 80%; left: 15%; font-size: 2.4rem; animation-duration: 15s; animation-delay: -7s; }
-    .eq-6 { top: 85%; right: 20%; font-size: 2rem; animation-duration: 19s; animation-delay: -1s; }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-20px) rotate(3deg);
-      }
-    }
-
-    /* Header Styling */
-    .header {
+    /* Top Portal Bar */
+    .top-bar {
+      width: 100%;
       text-align: center;
-      margin-bottom: 30px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .header h1 {
-      color: #003366;
-      font-size: 2.2rem;
-      margin: 0 0 8px 0;
-      letter-spacing: 1px;
-    }
-
-    .header p {
-      color: #666666;
-      font-size: 1rem;
-      margin: 0;
+      padding: 12px;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #00d2ff;
+      background: rgba(0, 0, 0, 0.4);
+      border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+      z-index: 2;
     }
 
     /* Main Container */
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
+    .main-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 650px;
+      padding: 30px 20px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      position: relative;
-      z-index: 1;
+      align-items: center;
     }
 
+    /* Main Header */
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* Navigation Container */
+    .container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Glowing Card Design */
     .card {
-      background: #ffffff;
-      border: 1px solid #e1e4e8;
-      border-radius: 8px;
+      background: rgba(13, 25, 48, 0.75);
+      backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(0, 210, 255, 0.3);
+      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 210, 255, 0.05);
+      transition: all 0.3s ease;
     }
 
     .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+      border-color: #00ffcc;
+      box-shadow: 0 6px 25px rgba(0, 255, 204, 0.3), inset 0 0 20px rgba(0, 255, 204, 0.1);
     }
 
     .card a {
-      color: #0066cc;
+      color: #ffffff;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       display: block;
+      transition: color 0.3s ease;
     }
 
-    .card a:hover {
-      text-decoration: underline;
+    .card:hover a {
+      color: #00ffcc;
+    }
+
+    /* Footer */
+    .footer {
+      position: relative;
+      z-index: 2;
+      margin-top: auto;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Equations in Background -->
-  <div class="bg-equations">
-    <div class="equation eq-1">E = mc²</div>
-    <div class="equation eq-2">F = ma</div>
-    <div class="equation eq-3">∇ × B = μ₀J</div>
-    <div class="equation eq-4">PV = nRT</div>
-    <div class="equation eq-5">λ = h / p</div>
-    <div class="equation eq-6">V = IR</div>
-  </div>
+  <!-- Background Canvas for Formula Animation -->
+  <canvas id="physics-canvas"></canvas>
 
-  <!-- Header -->
-  <div class="header">
-    <h1>WELCOME TO PL-PHYSICS</h1>
-    <p>Select a portal below to access learning resources</p>
-  </div>
+  <div class="top-bar">PL-PHYSICS ADVANCED STUDY PORTAL</div>
 
-  <!-- Links Section -->
-  <div class="container">
-    <div class="card">
-      <a href="./centum2027.html">CENTUM IN PHYSICS-Materials</a>
+  <div class="main-wrapper">
+    <div class="header">
+      <h1>⚛️ WELCOME TO PL-PHYSICS 💡</h1>
     </div>
-    <div class="card">
-      <a href="./MCQ.html">MCQ test series</a>
-    </div>
-    <div class="card">
-      <a href="./figures.html">Diagram based test series</a>
-    </div>
-    <div class="card">
-      <a href="./neet.html">NEET Exam- Practice test</a>
-    </div>
-    <div class="card">
-      <a href="./Jee.html">JEE Mains test series</a>
+
+    <div class="container">
+      <div class="card">
+        <a href="./centum2027.html">CENTUM IN PHYSICS-Materials</a>
+      </div>
+      <div class="card">
+        <a href="./MCQ.html">MCQ test series</a>
+      </div>
+      <div class="card">
+        <a href="./figures.html">Diagram based test series</a>
+      </div>
+      <div class="card">
+        <a href="./neet.html">NEET Exam- Practice test</a>
+      </div>
+      <div class="card">
+        <a href="./Jee.html">JEE Mains test series</a>
+      </div>
     </div>
   </div>
 
+  <div class="footer">
+    © PL-Physics | Powered by Curiosity
+  </div>
+
+  <script>
+    const canvas = document.getElementById('physics-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Resize Canvas to fit screen
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // 20 Formulae from 11th Standard
+    const formulas11 = [
+      "v = u + at", "s = ut + ½at²", "v² = u² + 2as", "F = ma", "p = mv",
+      "W = F·d", "K = ½mv²", "U = mgh", "P = W/t", "τ = r × F",
+      "L = Iω", "F = G(m₁m₂)/r²", "T = 2π√(l/g)", "Hooke: F = -kx", "ρ = m/V",
+      "P = F/A", "PV = nRT", "v = fλ", "Cp - Cv = R", "ΔQ = ΔU + W"
+    ];
+
+    // 20 Formulae from 12th Standard
+    const formulas12 = [
+      "F = k(q₁q₂)/r²", "E = F/q", "V = IR", "P = VI", "P = V²/R",
+      "F = q(E + v×B)", "B = μ₀I / (2πr)", "ε = -dΦ/dt", "c = 1/√(μ₀ε₀)", "E = hf",
+      "λ = h/p", "E = mc²", "N = N₀e⁻λᵗ", "1/f = 1/v + 1/u", "d sinθ = mλ",
+      "eV_stop = hf - Φ", "I = nAev_d", "XC = 1/(ωC)", "XL = ωL", "∇×E = -∂B/∂t"
+    ];
+
+    // Neon Palette for Collisions
+    const neonColors = [
+      "#00d2ff", "#00ffcc", "#ff007f", "#ffdd00",
+      "#a855f7", "#3b82f6", "#10b981", "#f97316"
+    ];
+
+    function getRandomColor() {
+      return neonColors[Math.floor(Math.random() * neonColors.length)];
+    }
+
+    class Particle {
+      constructor(text, grade) {
+        this.text = text;
+        this.grade = grade; // "11th" or "12th"
+        this.fontSize = Math.floor(Math.random() * 6) + 14; // Font size 14px to 19px
+        this.color = getRandomColor();
+        this.x = Math.random() * (canvas.width - 150) + 20;
+        this.y = Math.random() * (canvas.height - 50) + 20;
+        
+        // Random velocities
+        this.vx = (Math.random() - 0.5) * 1.8;
+        this.vy = (Math.random() - 0.5) * 1.8;
+
+        // Ensure velocity is not zero
+        if (Math.abs(this.vx) < 0.3) this.vx = 0.5;
+        if (Math.abs(this.vy) < 0.3) this.vy = 0.5;
+      }
+
+      draw() {
+        ctx.font = `600 ${this.fontSize}px 'Courier New', monospace`;
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 8;
+        ctx.fillText(this.text, this.x, this.y);
+        ctx.shadowBlur = 0; // reset blur for performance
+      }
+
+      update() {
+        ctx.font = `600 ${this.fontSize}px 'Courier New', monospace`;
+        const metrics = ctx.measureText(this.text);
+        const textWidth = metrics.width;
+        const textHeight = this.fontSize;
+
+        let hitBorder = false;
+
+        // X-axis border collisions
+        if (this.x + this.vx < 0 || this.x + textWidth + this.vx > canvas.width) {
+          this.vx = -this.vx;
+          hitBorder = true;
+        }
+
+        // Y-axis border collisions
+        if (this.y - textHeight + this.vy < 0 || this.y + this.vy > canvas.height) {
+          this.vy = -this.vy;
+          hitBorder = true;
+        }
+
+        // Change color when bouncing off edge
+        if (hitBorder) {
+          this.color = getRandomColor();
+        }
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        this.draw();
+      }
+    }
+
+    // Initialize Particles Array
+    const particles = [];
+
+    // Add 20 Class 11 Formulas
+    formulas11.forEach(eq => {
+      particles.push(new Particle(eq, "11th"));
+    });
+
+    // Add 20 Class 12 Formulas
+    formulas12.forEach(eq => {
+      particles.push(new Particle(eq, "12th"));
+    });
+
+    // Animation Loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => p.update());
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>

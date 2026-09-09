@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Links</title>
+  <style>
+    /* Prevent content from displaying before password check */
+    body {
+      display: none;
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e1e4e8;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .card a {
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: block;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    // Change your password here
+    const SECRET_PASSWORD = "myPassword123";
+
+    function checkPassword() {
+      const userInput = prompt("Enter the password to view this page:");
+      if (userInput === SECRET_PASSWORD) {
+        // Display page content if correct
+        document.body.style.display = "block";
+      } else {
+        alert("Incorrect password. Access denied.");
+        window.location.reload();
+      }
+    }
+
+    // Run password check when script loads
+    checkPassword();
+  </script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <a href="./page1.html">Link1</a>
+    </div>
+    <div class="card">
+      <a href="./page2.html">Link2</a>
+    </div>
+    <div class="card">
+      <a href="./page3.html">Link3</a>
+    </div>
+    <div class="card">
+      <a href="./page4.html">Link4</a>
+    </div>
+    <div class="card">
+      <a href="./page5.html">Link5</a>
+    </div>
+  </div>
+
+</body>
+</html>

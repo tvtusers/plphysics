@@ -3,21 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Dashboard - PL-PHYSICS</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f6f8;
       margin: 0;
       padding: 40px 20px;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
+    /* Floating Physics Equations Background */
+    .bg-equations {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .equation {
+      position: absolute;
+      color: rgba(0, 51, 102, 0.06); /* Mild, subtle color */
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      user-select: none;
+      animation: float 12s infinite ease-in-out;
+    }
+
+    /* Random placement and font sizes for equations */
+    .eq-1 { top: 10%; left: 8%;  font-size: 2rem; animation-duration: 14s; }
+    .eq-2 { top: 25%; right: 12%; font-size: 2.5rem; animation-duration: 18s; animation-delay: -2s; }
+    .eq-3 { top: 45%; left: 5%;  font-size: 2.2rem; animation-duration: 16s; animation-delay: -5s; }
+    .eq-4 { top: 65%; right: 8%; font-size: 1.8rem; animation-duration: 20s; animation-delay: -3s; }
+    .eq-5 { top: 80%; left: 15%; font-size: 2.4rem; animation-duration: 15s; animation-delay: -7s; }
+    .eq-6 { top: 85%; right: 20%; font-size: 2rem; animation-duration: 19s; animation-delay: -1s; }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(3deg);
+      }
+    }
+
+    /* Header Styling */
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header h1 {
+      color: #003366;
+      font-size: 2.2rem;
+      margin: 0 0 8px 0;
+      letter-spacing: 1px;
+    }
+
+    .header p {
+      color: #666666;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    /* Main Container */
     .container {
       max-width: 600px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     .card {
@@ -49,6 +118,23 @@
 </head>
 <body>
 
+  <!-- Floating Equations in Background -->
+  <div class="bg-equations">
+    <div class="equation eq-1">E = mc²</div>
+    <div class="equation eq-2">F = ma</div>
+    <div class="equation eq-3">∇ × B = μ₀J</div>
+    <div class="equation eq-4">PV = nRT</div>
+    <div class="equation eq-5">λ = h / p</div>
+    <div class="equation eq-6">V = IR</div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>WELCOME TO PL-PHYSICS</h1>
+    <p>Select a portal below to access learning resources</p>
+  </div>
+
+  <!-- Links Section -->
   <div class="container">
     <div class="card">
       <a href="./centum2027.html">CENTUM IN PHYSICS-Materials</a>

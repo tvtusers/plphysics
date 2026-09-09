@@ -13,7 +13,7 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #050b14;
+      background-color: #030710;
       color: #ffffff;
       min-height: 100vh;
       overflow-x: hidden;
@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Bouncing Physics Canvas */
+    /* Background Canvas */
     #physics-canvas {
       position: fixed;
       top: 0;
@@ -39,13 +39,13 @@
     .top-bar {
       width: 100%;
       text-align: center;
-      padding: 12px;
-      font-size: 0.9rem;
+      padding: 10px;
+      font-size: 0.85rem;
       letter-spacing: 2px;
       font-weight: 700;
       text-transform: uppercase;
       color: #00d2ff;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.6);
       border-bottom: 1px solid rgba(0, 210, 255, 0.2);
       z-index: 2;
     }
@@ -55,8 +55,8 @@
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 650px;
-      padding: 30px 20px;
+      max-width: 550px;
+      padding: 25px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -65,18 +65,18 @@
     /* Main Header */
     .header {
       text-align: center;
-      margin-bottom: 35px;
+      margin-bottom: 25px;
     }
 
     .header h1 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 800;
       color: #ffffff;
-      text-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
+      text-shadow: 0 0 15px rgba(0, 210, 255, 0.8);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     /* Navigation Container */
@@ -84,31 +84,31 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     /* Glowing Card Design */
     .card {
-      background: rgba(13, 25, 48, 0.75);
-      backdrop-filter: blur(10px);
-      border: 1.5px solid rgba(0, 210, 255, 0.3);
+      background: rgba(8, 16, 32, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(0, 210, 255, 0.4);
       border-radius: 12px;
-      padding: 20px;
+      padding: 18px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 210, 255, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(0, 210, 255, 0.1);
       transition: all 0.3s ease;
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       border-color: #00ffcc;
-      box-shadow: 0 6px 25px rgba(0, 255, 204, 0.3), inset 0 0 20px rgba(0, 255, 204, 0.1);
+      box-shadow: 0 6px 25px rgba(0, 255, 204, 0.4), inset 0 0 20px rgba(0, 255, 204, 0.2);
     }
 
     .card a {
       color: #ffffff;
       text-decoration: none;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
       letter-spacing: 0.5px;
       display: block;
@@ -124,16 +124,15 @@
       position: relative;
       z-index: 2;
       margin-top: auto;
-      padding: 20px;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.5);
+      padding: 15px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
       text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Canvas for Formula Animation -->
   <canvas id="physics-canvas"></canvas>
 
   <div class="top-bar">PL-PHYSICS ADVANCED STUDY PORTAL</div>
@@ -163,14 +162,13 @@
   </div>
 
   <div class="footer">
-    © PL-Physics | Powered by Curiosity
+    © PL-Physics 2027 | Powered by Curiosity
   </div>
 
   <script>
     const canvas = document.getElementById('physics-canvas');
     const ctx = canvas.getContext('2d');
 
-    // Resize Canvas to fit screen
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -181,8 +179,8 @@
     // 20 Formulae from 11th Standard
     const formulas11 = [
       "v = u + at", "s = ut + ½at²", "v² = u² + 2as", "F = ma", "p = mv",
-      "W = F·d", "K = ½mv²", "U = mgh", "P = W/t", "τ = r × F",
-      "L = Iω", "F = G(m₁m₂)/r²", "T = 2π√(l/g)", "Hooke: F = -kx", "ρ = m/V",
+      "W = ΔK", "K = ½mv²", "U = mgh", "P = W/t", "τ = r × F",
+      "L = Iω", "F = G(m₁m₂)/r²", "T = 2π√(l/g)", "F = -kx", "ρ = m/V",
       "P = F/A", "PV = nRT", "v = fλ", "Cp - Cv = R", "ΔQ = ΔU + W"
     ];
 
@@ -194,7 +192,6 @@
       "eV_stop = hf - Φ", "I = nAev_d", "XC = 1/(ωC)", "XL = ωL", "∇×E = -∂B/∂t"
     ];
 
-    // Neon Palette for Collisions
     const neonColors = [
       "#00d2ff", "#00ffcc", "#ff007f", "#ffdd00",
       "#a855f7", "#3b82f6", "#10b981", "#f97316"
@@ -204,82 +201,117 @@
       return neonColors[Math.floor(Math.random() * neonColors.length)];
     }
 
-    class Particle {
-      constructor(text, grade) {
-        this.text = text;
-        this.grade = grade; // "11th" or "12th"
-        this.fontSize = Math.floor(Math.random() * 6) + 14; // Font size 14px to 19px
+    // Combine all 40 formulas
+    const allFormulas = [];
+    formulas11.forEach(f => allFormulas.push({ text: f, grade: '11th' }));
+    formulas12.forEach(f => allFormulas.push({ text: f, grade: '12th' }));
+
+    // 5 Radial Angle Paths (Degrees converted to Radians)
+    // Angles point inward toward center
+    const radialAngles = [
+      Math.PI,                  // Left side
+      -Math.PI / 3,             // Top Right
+      Math.PI / 3,              // Bottom Right
+      -2 * Math.PI / 3,         // Top Left
+      2 * Math.PI / 3           // Bottom Left
+    ];
+
+    class RadialFormula {
+      constructor(formulaObj, trackIndex, offsetProgress) {
+        this.text = formulaObj.text;
+        this.grade = formulaObj.grade;
+        this.trackIndex = trackIndex;
+        this.progress = offsetProgress; // 0.0 (Outer Edge) to 1.0 (Center)
+        this.speed = 0.0015 + Math.random() * 0.001; // Movement speed
         this.color = getRandomColor();
-        this.x = Math.random() * (canvas.width - 150) + 20;
-        this.y = Math.random() * (canvas.height - 50) + 20;
-        
-        // Random velocities
-        this.vx = (Math.random() - 0.5) * 1.8;
-        this.vy = (Math.random() - 0.5) * 1.8;
-
-        // Ensure velocity is not zero
-        if (Math.abs(this.vx) < 0.3) this.vx = 0.5;
-        if (Math.abs(this.vy) < 0.3) this.vy = 0.5;
-      }
-
-      draw() {
-        ctx.font = `600 ${this.fontSize}px 'Courier New', monospace`;
-        ctx.fillStyle = this.color;
-        ctx.shadowColor = this.color;
-        ctx.shadowBlur = 8;
-        ctx.fillText(this.text, this.x, this.y);
-        ctx.shadowBlur = 0; // reset blur for performance
+        this.fontSize = 15;
       }
 
       update() {
-        ctx.font = `600 ${this.fontSize}px 'Courier New', monospace`;
-        const metrics = ctx.measureText(this.text);
-        const textWidth = metrics.width;
-        const textHeight = this.fontSize;
+        this.progress += this.speed;
 
-        let hitBorder = false;
-
-        // X-axis border collisions
-        if (this.x + this.vx < 0 || this.x + textWidth + this.vx > canvas.width) {
-          this.vx = -this.vx;
-          hitBorder = true;
+        // Reset back to outer boundary when reaching center
+        if (this.progress >= 1.0) {
+          this.progress = 0.0;
+          this.color = getRandomColor(); // Change color on respawn
         }
-
-        // Y-axis border collisions
-        if (this.y - textHeight + this.vy < 0 || this.y + this.vy > canvas.height) {
-          this.vy = -this.vy;
-          hitBorder = true;
-        }
-
-        // Change color when bouncing off edge
-        if (hitBorder) {
-          this.color = getRandomColor();
-        }
-
-        this.x += this.vx;
-        this.y += this.vy;
 
         this.draw();
       }
+
+      draw() {
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        // Calculate maximum radial distance from screen corners
+        const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY);
+        const minRadius = 220; // Radius where cards sit
+
+        const currentRadius = maxRadius - (this.progress * (maxRadius - minRadius));
+        const angle = radialAngles[this.trackIndex];
+
+        // Convert Polar to Cartesian coordinates
+        const x = centerX + currentRadius * Math.cos(angle);
+        const y = centerY + currentRadius * Math.sin(angle);
+
+        ctx.save();
+        ctx.translate(x, y);
+
+        // Draw track indicator line softly
+        ctx.font = `600 ${this.fontSize}px 'Courier New', monospace`;
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 10;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        
+        ctx.fillText(this.text, 0, 0);
+        ctx.restore();
+      }
     }
 
-    // Initialize Particles Array
-    const particles = [];
-
-    // Add 20 Class 11 Formulas
-    formulas11.forEach(eq => {
-      particles.push(new Particle(eq, "11th"));
+    // Distribute formulas evenly across the 5 radial tracks
+    const activeFormulas = [];
+    allFormulas.forEach((fObj, index) => {
+      const trackIndex = index % 5;
+      // Stagger formulas along the radial path
+      const offsetProgress = (Math.floor(index / 5) * 0.12) % 1.0; 
+      activeFormulas.push(new RadialFormula(fObj, trackIndex, offsetProgress));
     });
 
-    // Add 20 Class 12 Formulas
-    formulas12.forEach(eq => {
-      particles.push(new Particle(eq, "12th"));
-    });
+    // Draw Radial Guidelines
+    function drawRadialLines() {
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY);
+
+      ctx.strokeStyle = "rgba(0, 210, 255, 0.08)";
+      ctx.lineWidth = 1;
+      ctx.setLineDash([5, 5]);
+
+      radialAngles.forEach(angle => {
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(
+          centerX + maxRadius * Math.cos(angle),
+          centerY + maxRadius * Math.sin(angle)
+        );
+        ctx.stroke();
+      });
+
+      ctx.setLineDash([]);
+    }
 
     // Animation Loop
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => p.update());
+      
+      // Draw standard guide lines
+      drawRadialLines();
+
+      // Update and render all 40 radial formulas
+      activeFormulas.forEach(f => f.update());
+
       requestAnimationFrame(animate);
     }
 

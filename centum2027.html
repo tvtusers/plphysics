@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2027 Centum scorers</title>
+  <style>
+    /* Hide body by default until password is verified */
+    body {
+      display: none;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+  </style>
+  <script>
+    // Set the password specifically for Page 1 here
+    const PAGE_PASSWORD = "100in2027";
+
+    function checkPassword() {
+      const userInput = prompt("Enter password for Scoring centum:");
+      if (userInput === PAGE_PASSWORD) {
+        document.body.style.display = "block";
+      } else {
+        alert("Incorrect password! Need hardwork!");
+        // Redirect back to main page if wrong password
+        window.location.href = "./index.html";
+      }
+    }
+
+    checkPassword();
+  </script>
+</head>
+<body>
+
+  <h1>Welcome to "Centum in physics"</h1>
+  <p>This is protected content for Scoring centum in physics.</p>
+  <a href="./index.html">← Back to Main Menu</a>
+
+</body>
+</html>

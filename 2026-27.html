@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Study Materials (XI-JEE & XI-NEET)</title>
-    <!-- Tailwind CSS for clean layout -->
+    <title>XI Physics Study Materials</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Physics Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,131 +15,79 @@
             font-family: 'Inter', sans-serif;
         }
         .accordion-content {
-            transition: max-height 0.3s ease-in-out, opacity 0.25s ease-in-out;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             max-height: 0;
             opacity: 0;
             overflow: hidden;
         }
         .accordion-content.open {
-            max-height: 500px;
+            max-height: 120px;
             opacity: 1;
         }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-2xl space-y-4">
+    <div class="w-full max-w-lg space-y-4">
         
         <!-- XI-JEE Physics Card -->
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <!-- Card Header / Click Trigger -->
-            <button onclick="toggleCard('jee')" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-slate-50 transition-colors text-left focus:outline-none">
+        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
+            <!-- Card Header / Toggle Button -->
+            <button onclick="toggleCard('jee')" class="w-full p-6 flex items-center justify-between bg-white hover:bg-slate-50/80 transition-colors text-left focus:outline-none">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl shadow-inner">
                         <i class="fa-solid fa-atom"></i>
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-slate-800">XI-JEE Physics Materials</h2>
-                        <p class="text-xs text-slate-500">Click to expand / collapse</p>
+                        <p class="text-xs text-slate-400 mt-0.5">Click to view drive link</p>
                     </div>
                 </div>
                 <i id="jeeChevron" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
             </button>
 
-            <!-- Expanded Table Content -->
-            <div id="jeeContent" class="accordion-content border-t border-slate-100">
-                <div class="p-4 sm:p-6">
-                    <table class="w-full text-left text-sm">
-                        <thead>
-                            <tr class="border-b border-slate-200 text-slate-400 uppercase text-xs">
-                                <th class="pb-3 font-semibold">Material Name</th>
-                                <th class="pb-3 font-semibold text-right">Link</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr>
-                                <td class="py-3 font-medium text-slate-700">Mechanics & Kinematics</td>
-                                <td class="py-3 text-right">
-                                    <a href="#" onclick="event.preventDefault();" class="text-indigo-600 font-semibold hover:underline">Link 1</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 font-medium text-slate-700">Laws of Motion & Work Energy</td>
-                                <td class="py-3 text-right">
-                                    <a href="#" onclick="event.preventDefault();" class="text-indigo-600 font-semibold hover:underline">Link 2</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 font-medium text-slate-700">Rotational Dynamics</td>
-                                <td class="py-3 text-right">
-                                    <a href="#" onclick="event.preventDefault();" class="text-indigo-600 font-semibold hover:underline">Link 3</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 font-medium text-slate-700">Gravitation & Oscillations</td>
-                                <td class="py-3 text-right">
-                                    <a href="#" onclick="event.preventDefault();" class="text-indigo-600 font-semibold hover:underline">Link 4</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Expanded Drive Link Area -->
+            <div id="jeeContent" class="accordion-content border-t border-slate-100 bg-slate-50/50">
+                <div class="p-5 flex justify-center items-center">
+                    <a href="https://drive.google.com/drive/folders/1yGdDjJUkQ4UhbFsUzkAlOpNNePPFE-gF?usp=sharing" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="inline-flex items-center justify-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-indigo-200 hover:-translate-y-0.5 w-full text-center">
+                        <i class="fa-brands fa-google-drive"></i>
+                        <span>CLICK TO OPEN THE DRIVE</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
         <!-- XI-NEET Physics Card -->
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <!-- Card Header / Click Trigger -->
-            <button onclick="toggleCard('neet')" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-slate-50 transition-colors text-left focus:outline-none">
+        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
+            <!-- Card Header / Toggle Button -->
+            <button onclick="toggleCard('neet')" class="w-full p-6 flex items-center justify-between bg-white hover:bg-slate-50/80 transition-colors text-left focus:outline-none">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shadow-inner">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-slate-800">XI-NEET Physics Materials</h2>
-                        <p class="text-xs text-slate-500">Click to expand / collapse</p>
+                        <p class="text-xs text-slate-400 mt-0.5">Click to view drive link</p>
                     </div>
                 </div>
                 <i id="neetChevron" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
             </button>
 
-            <!-- Expanded Table Content -->
-            <div id="neetContent" class="accordion-content border-t border-slate-100">
-                <div class="p-4 sm:p-6">
-                    <table class="w-full text-left text-sm">
-                        <thead>
-                            <tr class="border-b border-slate-200 text-slate-400 uppercase text-xs">
-                                <th class="pb-3 font-semibold">Material Name</th>
-                                <th class="pb-3 font-semibold text-right">Link</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr>
-                                <td class="py-3 font-medium text-slate-700">Physical World & Measurement</td>
-                                <td class="py-3 text-right">
-                                    <a href="#" onclick="event.preventDefault();" class="text-emerald-600 font-semibold hover:underline">Link 1</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 font-medium text-slate-700">Kinematics & Laws of Motion</td>
-                                <td class="py-3 text-right">
-                                    <a href="#" onclick="event.preventDefault();" class="text-emerald-600 font-semibold hover:underline">Link 2</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 font-medium text-slate-700">Properties of Bulk Matter</td>
-                                <td class="py-3 text-right">
-                                    <a href="#" onclick="event.preventDefault();" class="text-emerald-600 font-semibold hover:underline">Link 3</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 font-medium text-slate-700">Thermodynamics & Oscillations</td>
-                                <td class="py-3 text-right">
-                                    <a href="#" onclick="event.preventDefault();" class="text-emerald-600 font-semibold hover:underline">Link 4</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Expanded Drive Link Area -->
+            <div id="neetContent" class="accordion-content border-t border-slate-100 bg-slate-50/50">
+                <div class="p-5 flex justify-center items-center">
+                    <a href="https://drive.google.com/drive/folders/1plU9Q2GUx76SSppzwYEzsIJ9FwhBN8EE?usp=sharing" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="inline-flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-emerald-200 hover:-translate-y-0.5 w-full text-center">
+                        <i class="fa-brands fa-google-drive"></i>
+                        <span>CLICK TO OPEN THE DRIVE</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+                    </a>
                 </div>
             </div>
         </div>

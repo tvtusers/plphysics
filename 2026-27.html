@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Study Materials (XI-JEE & XI-NEET)</title>
+    <!-- Tailwind CSS for clean layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Physics Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .accordion-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.25s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-2xl space-y-4">
+        
+        <!-- XI-JEE Physics Card -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <!-- Card Header / Click Trigger -->
+            <button onclick="toggleCard('jee')" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-slate-50 transition-colors text-left focus:outline-none">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-atom"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800">XI-JEE Physics Materials</h2>
+                        <p class="text-xs text-slate-500">Click to expand / collapse</p>
+                    </div>
+                </div>
+                <i id="jeeChevron" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+            </button>
+
+            <!-- Expanded Table Content -->
+            <div id="jeeContent" class="accordion-content border-t border-slate-100">
+                <div class="p-4 sm:p-6">
+                    <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-slate-400 uppercase text-xs">
+                                <th class="pb-3 font-semibold">Material Name</th>
+                                <th class="pb-3 font-semibold text-right">Link</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="py-3 font-medium text-slate-700">Mechanics & Kinematics</td>
+                                <td class="py-3 text-right">
+                                    <a href="#" onclick="event.preventDefault();" class="text-indigo-600 font-semibold hover:underline">Link 1</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 font-medium text-slate-700">Laws of Motion & Work Energy</td>
+                                <td class="py-3 text-right">
+                                    <a href="#" onclick="event.preventDefault();" class="text-indigo-600 font-semibold hover:underline">Link 2</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 font-medium text-slate-700">Rotational Dynamics</td>
+                                <td class="py-3 text-right">
+                                    <a href="#" onclick="event.preventDefault();" class="text-indigo-600 font-semibold hover:underline">Link 3</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 font-medium text-slate-700">Gravitation & Oscillations</td>
+                                <td class="py-3 text-right">
+                                    <a href="#" onclick="event.preventDefault();" class="text-indigo-600 font-semibold hover:underline">Link 4</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- XI-NEET Physics Card -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <!-- Card Header / Click Trigger -->
+            <button onclick="toggleCard('neet')" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-slate-50 transition-colors text-left focus:outline-none">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800">XI-NEET Physics Materials</h2>
+                        <p class="text-xs text-slate-500">Click to expand / collapse</p>
+                    </div>
+                </div>
+                <i id="neetChevron" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+            </button>
+
+            <!-- Expanded Table Content -->
+            <div id="neetContent" class="accordion-content border-t border-slate-100">
+                <div class="p-4 sm:p-6">
+                    <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-slate-400 uppercase text-xs">
+                                <th class="pb-3 font-semibold">Material Name</th>
+                                <th class="pb-3 font-semibold text-right">Link</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="py-3 font-medium text-slate-700">Physical World & Measurement</td>
+                                <td class="py-3 text-right">
+                                    <a href="#" onclick="event.preventDefault();" class="text-emerald-600 font-semibold hover:underline">Link 1</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 font-medium text-slate-700">Kinematics & Laws of Motion</td>
+                                <td class="py-3 text-right">
+                                    <a href="#" onclick="event.preventDefault();" class="text-emerald-600 font-semibold hover:underline">Link 2</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 font-medium text-slate-700">Properties of Bulk Matter</td>
+                                <td class="py-3 text-right">
+                                    <a href="#" onclick="event.preventDefault();" class="text-emerald-600 font-semibold hover:underline">Link 3</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 font-medium text-slate-700">Thermodynamics & Oscillations</td>
+                                <td class="py-3 text-right">
+                                    <a href="#" onclick="event.preventDefault();" class="text-emerald-600 font-semibold hover:underline">Link 4</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleCard(type) {
+            const content = document.getElementById(type + 'Content');
+            const chevron = document.getElementById(type + 'Chevron');
+
+            const isOpen = content.classList.contains('open');
+
+            if (isOpen) {
+                content.classList.remove('open');
+                chevron.classList.remove('rotate-180');
+            } else {
+                content.classList.add('open');
+                chevron.classList.add('rotate-180');
+            }
+        }
+    </script>
+</body>
+</html>
